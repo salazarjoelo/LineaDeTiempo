@@ -21,9 +21,7 @@
         </sql>
     </uninstall>
     <update>
-        <schemas>
-            <schemapath type="mysql">administrator/sql/updates/mysql</schemapath>
-        </schemas>
+        <schemapath type="mysql">sql/updates/mysql</schemapath>
     </update>
 
     <files folder="site">
