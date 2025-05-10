@@ -1,1 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+    <fieldset name="details"
+        label="COM_TIMELINE_ITEM_DETAILS_LABEL"
+        description="COM_TIMELINE_ITEM_DETAILS_DESC"
+    >
+        <field
+            name="id"
+            type="hidden"
+            default="0"
+        />
 
+        <field
+            name="asset_id"
+            type="hidden"
+            filter="integer"
+        /> <field
+            name="title"
+            type="text"
+            label="COM_TIMELINE_FIELD_TITLE_LABEL"
+            description="COM_TIMELINE_FIELD_TITLE_DESC"
+            required="true"
+            size="40"
+            maxlength="255"
+            filter="string" 
+            validate="string"
+        />
+
+        <field
+            name="description"
+            type="editor" label="COM_TIMELINE_FIELD_DESCRIPTION_LABEL"
+            description="COM_TIMELINE_FIELD_DESCRIPTION_DESC"
+            filter="safehtml" buttons="true"
+            hide="readmore,pagebreak"
+            required="false"
+        />
+
+        <field
+            name="date"
+            type="calendar"
+            label="COM_TIMELINE_FIELD_DATE_LABEL"
+            description="COM_TIMELINE_FIELD_DATE_DESC"
+            required="true"
+            format="%Y-%m-%d %H:%M:%S" showtime="true"
+            timeformat="24"
+            filter="server_utc" />
+
+        <field
+            name="state"
+            type="list"
+            label="JSTATUS"
+            description="JFIELD_PUBLISHED_DESC"
+            class="form-select" default="1"
+            required="true"
+            filter="integer"
+        >
+            <option value="1">JPUBLISHED</option>
+            <option value="0">JUNPUBLISHED</option>
+            <option value="2">JARCHIVED</option>
+            <option value="-2">JTRASHED</option>
+        </field>
+
+        <field
+            name="ordering"
+            type="hidden"
+            filter="integer"
+        />
+
+    </fieldset>
+
+    <fieldset name="metadata"
+        label="JGLOBAL_FIELDSET_METADATA_OPTIONS"
+        description="JGLOBAL_FIELDSET_METADATA_OPTIONS_DESC"
+    >
+        <field
+            name="created"
+            type="calendar"
+            label="JCREATED"
+            class="readonly"
+            readonly="true"
+            format="%Y-%m-%d %H:%M:%S"
+            filter="server_utc"
+            showtime="true"
+            timeformat="24"
+            disabled="true"
+        />
+
+        <field
+            name="created_by"
+            type="user"
+            label="JAUTHOR"
+            class="readonly"
+            readonly="true"
+            filter="integer"
+            disabled="true"
+        />
+
+        <field
+            name="modified"
+            type="calendar"
+            label="JMODIFIED"
+            class="readonly"
+            readonly="true"
+            format="%Y-%m-%d %H:%M:%S"
+            filter="server_utc"
+            showtime="true"
+            timeformat="24"
+            disabled="true"
+        />
+
+        <field
+            name="modified_by"
+            type="user"
+            label="JMODIFIED_BY"
+            class="readonly"
+            readonly="true"
+            filter="integer"
+            disabled="true"
+        />
+    </fieldset>
+    
+    <fieldset
+        name="item_permissions"
+        label="JCONFIG_PERMISSIONS_LABEL"
+        description="JCONFIG_PERMISSIONS_DESC"
+    >
+        <field
+            name="rules"
+            type="rules"
+            label="JCONFIG_PERMISSIONS_LABEL"
+            filter="rules"
+            validate="rules"
+            component="com_timeline"
+            section="item" />
+    </fieldset>
+</form>
