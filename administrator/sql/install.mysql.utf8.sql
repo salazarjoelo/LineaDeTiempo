@@ -1,6 +1,6 @@
-DROP TABLE IF EXISTS `#__timeline_items`;
+DROP TABLE IF EXISTS `#__lineadetiempo_items`; -- Nombre de tabla actualizado
 
-CREATE TABLE `#__timeline_items` (
+CREATE TABLE `#__lineadetiempo_items` ( -- Nombre de tabla actualizado
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `asset_id` INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'FK to the #__assets table.',
   `title` VARCHAR(255) NOT NULL,
