@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" method="upgrade">
-    <name>COM_TIMELINE</name>
-    <author>Joel Salazar</author>
-    <creationDate>Mayo 2025</creationDate> <copyright>Copyright (C) 2023-2025 Joel Salazar. All rights reserved.</copyright>
+    <name>COM_LINEADETIEMPO</name> <author>Joel Salazar</author>
+    <creationDate>Mayo 2025</creationDate>
+    <copyright>Copyright (C) 2023-2025 Joel Salazar. All rights reserved.</copyright>
     <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
     <authorEmail>salazarjoelo@gmail.com</authorEmail>
     <authorUrl>salazarjoelo.github.io</authorUrl>
-    <version>5.0.0</version> <description>COM_TIMELINE_DESCRIPTION</description>
-
-    <namespace>Salazarjoelo\Component\Timeline</namespace>
+    <version>1.0.0</version> <description>COM_LINEADETIEMPO_DESCRIPTION</description> <namespace>Salazarjoelo\Component\LineaDeTiempo</namespace>
 
     <install>
         <sql>
@@ -21,35 +19,33 @@
         </sql>
     </uninstall>
     <update>
-        <schemapath type="mysql">sql/updates/mysql</schemapath>
+        <schemas>
+            <schemapath type="mysql">sql/updates/mysql</schemapath> </schemas>
     </update>
 
     <files folder="site">
         <folder>language</folder>
         <folder>layouts</folder>
-        <folder>services</folder>
-        <folder>src</folder>
-        <folder>tmpl</folder>
+        <folder>src</folder> <folder>tmpl</folder>
         <filename>index.html</filename>
     </files>
 
-    <media destination="com_timeline" folder="media">
-        <folder>css</folder>
+    <media destination="com_lineadetiempo" folder="media"> <folder>css</folder>
         <folder>images</folder>
         <folder>js</folder>
         <filename>index.html</filename>
     </media>
 
     <administration>
-        <menu link="index.php?option=com_timeline&amp;view=items"
+        <menu link="index.php?option=com_lineadetiempo&amp;view=items"
               view="items"
-              img="class:list-ul icon-list-ul" 
-              alt="Timeline/Items">COM_TIMELINE_MENU_ITEMS</menu> 
+              img="class:list-ul icon-list-ul"
+              alt="LineaDeTiempo/Items">COM_LINEADETIEMPO_MENU_ITEMS</menu>
         <submenu>
-            <menu link="index.php?option=com_timeline&amp;view=items"
+            <menu link="index.php?option=com_lineadetiempo&amp;view=items"
                   view="items"
-                  img="class:list-ul icon-list-ul" 
-                  alt="Timeline/Items">COM_TIMELINE_SUBMENU_ITEMS</menu>
+                  img="class:list-ul icon-list-ul"
+                  alt="LineaDeTiempo/Items">COM_LINEADETIEMPO_SUBMENU_ITEMS</menu>
             </submenu>
 
         <files folder="administrator"> <filename>access.xml</filename>
@@ -58,22 +54,20 @@
             <folder>forms</folder>
             <folder>language</folder>
             <folder>layouts</folder>
-            <folder>services</folder>
             <folder>sql</folder>
-            <folder>src</folder> 
-            <folder>tmpl</folder>
+            <folder>src</folder> <folder>tmpl</folder>
         </files>
 
-        <languages folder="administrator"> 
-            <language tag="en-GB">language/en-GB/en-GB.com_timeline.ini</language>
-            <language tag="en-GB">language/en-GB/en-GB.com_timeline.sys.ini</language>
-            <language tag="es-ES">language/es-ES/es-ES.com_timeline.ini</language>
-            <language tag="es-ES">language/es-ES/es-ES.com_timeline.sys.ini</language>
+        <languages folder="administrator">
+            <language tag="en-GB">language/en-GB/en-GB.com_lineadetiempo.ini</language>
+            <language tag="en-GB">language/en-GB/en-GB.com_lineadetiempo.sys.ini</language>
+            <language tag="es-ES">language/es-ES/es-ES.com_lineadetiempo.ini</language>
+            <language tag="es-ES">language/es-ES/es-ES.com_lineadetiempo.sys.ini</language>
         </languages>
-        
-        <languages folder="site"> 
-            <language tag="en-GB">language/en-GB/en-GB.com_timeline.ini</language>
-            <language tag="es-ES">language/es-ES/es-ES.com_timeline.ini</language>
+
+        <languages folder="site">
+            <language tag="en-GB">language/en-GB/en-GB.com_lineadetiempo.ini</language>
+            <language tag="es-ES">language/es-ES/es-ES.com_lineadetiempo.ini</language>
         </languages>
     </administration>
 
