@@ -1,1 +1,1 @@
-DROP TABLE IF EXISTS `#__timeline_items`;
+DROP TABLE IF EXISTS `#__lineadetiempo_items`;

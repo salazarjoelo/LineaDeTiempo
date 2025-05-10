@@ -1,7 +1,7 @@
 <?php
 /**
- * @package     Salazarjoelo\Component\Timeline
- * @subpackage  com_timeline
+ * @package     Salazarjoelo\Component\LineaDeTiempo
+ * @subpackage  com_lineadetiempo
  *
  * @copyright   Copyright (C) 2023-2025 Joel Salazar. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
@@ -9,30 +9,28 @@
 
 declare(strict_types=1);
 
-namespace Salazarjoelo\Component\Timeline\Site\Service;
+namespace Salazarjoelo\Component\LineaDeTiempo\Site\Service; // Namespace correcto para esta ubicación
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Application\SiteApplication;
 use Joomla\CMS\Dispatcher\ComponentDispatcherFactoryInterface;
 use Joomla\CMS\Extension\ComponentInterface;
 use Joomla\CMS\Extension\Service\Provider\ComponentDispatcherFactory;
 use Joomla\CMS\Extension\Service\Provider\MVCFactory;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
+use Joomla\CMS\Menu\Menu;
+use Joomla\Database\DatabaseInterface;
+use Joomla\CMS\Component\Router\RouterInterface;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 
-// Asegúrate que la ruta al Dispatcher (TimelineComponent) del frontend sea correcta
-use Salazarjoelo\Component\Timeline\Site\Dispatcher\TimelineComponent;
-use Joomla\CMS\Application\CMSApplication;
-use Joomla\CMS\Application\SiteApplication; // Añadido para el Router
-use Joomla\CMS\Menu\Menu;                   // Añadido para el Router
-use Joomla\Database\DatabaseInterface;      // Añadido para el Router
-use Joomla\CMS\Component\Router\RouterInterface; // Añadido para el Router
-use Salazarjoelo\Component\Timeline\Site\Router\Router as TimelineRouter; // Añadido para el Router
-
+use Salazarjoelo\Component\LineaDeTiempo\Site\Dispatcher\TimelineComponent;
+use Salazarjoelo\Component\LineaDeTiempo\Site\Router\Router as LineaDeTiempoRouter; // Alias para tu Router
 
 /**
- * Joomla Service Provider for the Timeline component (Site)
+ * Joomla Service Provider for the LineaDeTiempo component (Site)
  *
  * @since  1.0.0
  */
@@ -44,8 +42,6 @@ class Provider implements ServiceProviderInterface
      * @param   Container  $container  The DI container.
      *
      * @return  void
-     *
-     * @since   1.0.0
      */
     public function register(Container $container): void
     {
@@ -54,9 +50,7 @@ class Provider implements ServiceProviderInterface
             MVCFactoryInterface::class,
             function (Container $container) {
                 $factory = new MVCFactory($container);
-                // Define el namespace base para tus clases MVC del frontend
-                // Joomla buscará en Salazarjoelo\Component\Timeline\Site\Controller, Model, View
-                $factory->setNamespace('Salazarjoelo\\Component\\Timeline\\Site');
+                $factory->setNamespace('Salazarjoelo\\Component\\LineaDeTiempo\\Site');
                 return $factory;
             }
         );
@@ -66,8 +60,7 @@ class Provider implements ServiceProviderInterface
             ComponentDispatcherFactoryInterface::class,
             function (Container $container) {
                 $factory = new ComponentDispatcherFactory($container);
-                // El namespace aquí es para la clase *Dispatcher\TimelineComponent* del frontend
-                $factory->setNamespace('Salazarjoelo\\Component\\Timeline\\Site\\Dispatcher');
+                $factory->setNamespace('Salazarjoelo\\Component\\LineaDeTiempo\\Site\\Dispatcher');
                 return $factory;
             }
         );
@@ -77,28 +70,25 @@ class Provider implements ServiceProviderInterface
             ComponentInterface::class,
             function (Container $container) {
                 $component = new TimelineComponent(
-                    $container->get(CMSApplication::class), // CMSApplication es más genérico que SiteApplication aquí
+                    $container->get(CMSApplication::class),
                     $container->get(MVCFactoryInterface::class)
-                    // , JPATH_COMPONENT_SITE
                 );
                 return $component;
             }
         );
 
-        // NUEVO INICIO: Registrar el Router del componente
+        // Registrar el Router del componente
         $container->share(
-            RouterInterface::class, // Interfaz que implementa tu Router
+            RouterInterface::class,
             function (Container $container) {
-                // El Router necesita la aplicación del sitio, el menú y, a veces, la base de datos
-                return new TimelineRouter( // Tu clase Router específica
+                return new LineaDeTiempoRouter(
                     $container->get(SiteApplication::class),
                     $container->get(Menu::class),
                     $container->get(DatabaseInterface::class)
                 );
             },
-            true, // 'true' significa que es un servicio compartido (singleton)
-            'com_timeline' // Un alias para referenciar específicamente el router de este componente si es necesario
+            true,
+            'com_lineadetiempo' // Alias para el router de este componente
         );
-        // NUEVO FIN
     }
 }
