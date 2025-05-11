@@ -9,12 +9,13 @@ CREATE TABLE `#__lineadetiempo_items` (
   `state` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '1 = published, 0 = unpublished, 2 = archived, -2 = trashed',
   `ordering` INT(11) DEFAULT 0,
   `created_by` INT(10) UNSIGNED NOT NULL DEFAULT 0,
-  `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified_by` INT(10) UNSIGNED NOT NULL DEFAULT 0,
-  `modified` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `modified` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `checked_out` INT(10) UNSIGNED DEFAULT NULL,
   `checked_out_time` DATETIME DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `idx_created_by` (`created_by`),
-  KEY `idx_state` (`state`)
+  KEY `idx_state` (`state`),
+  KEY `idx_date` (`date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;

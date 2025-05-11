@@ -33,8 +33,7 @@
     <files folder="site">
         <folder>language</folder>
         <folder>layouts</folder>
-        <folder>src</folder>
-        <folder>tmpl</folder>
+        <folder>src</folder> <folder>tmpl</folder>
         <filename>index.html</filename>
     </files>
 
@@ -65,8 +64,7 @@
             <folder>language</folder>
             <folder>layouts</folder>
             <folder>sql</folder>
-            <folder>src</folder>
-            <folder>tmpl</folder>
+            <folder>src</folder> <folder>tmpl</folder>
         </files>
 
         <languages folder="administrator">

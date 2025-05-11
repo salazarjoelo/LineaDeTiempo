@@ -10,7 +10,7 @@
             type="text"
             label="COM_LINEADETIEMPO_CONFIG_EXAMPLE_PARAM_LABEL"
             description="COM_LINEADETIEMPO_CONFIG_EXAMPLE_PARAM_DESC"
-            default="Hello World"
+            default="Hello LineaDeTiempo"
         />
         </fieldset>
 
