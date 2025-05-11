@@ -1,13 +1,17 @@
-<?php defined('_JEXEC') or die; ?>
-<link rel="stylesheet" href="https://cdn.knightlab.com/libs/timeline3/latest/css/timeline.css">
-<script src="https://cdn.knightlab.com/libs/timeline3/latest/js/timeline.js"></script>
-
-<div id="timeline-embed" style="width: 100%; height: 600px;"></div>
-
-<script>
-  window.timeline = new TL.Timeline(
-    'timeline-embed',
-    '<?php echo JUri::root(); ?>index.php?option=com_lineadetiempo&view=timeline&format=json',
-    { initial_zoom: 2 }
-  );
-</script>
+<?php foreach ($this->items as $item) : ?>
+    <div class="timeline-event">
+        <?php if ($item->tipo_media === 'imagen') : ?>
+            <img src="<?php echo $item->url_media; ?>" 
+                 alt="<?php echo htmlspecialchars($item->titulo); ?>">
+        <?php elseif ($item->tipo_media === 'video') : ?>
+            <div class="video-wrapper">
+                <iframe src="<?php echo $item->url_media; ?>" 
+                        allowfullscreen></iframe>
+            </div>
+        <?php endif; ?>
+        <div class="event-content">
+            <h3><?php echo $item->titulo; ?></h3>
+            <p><?php echo $item->descripcion; ?></p>
+        </div>
+    </div>
+<?php endforeach; ?>
