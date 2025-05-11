@@ -1,44 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="component" method="upgrade">
-    <name>com_lineadetiempo</name>
-    <author>Joel Salazar</author>
-    <creationDate>2025-05-11</creationDate>
+<extension type="component" version="5.0" method="upgrade">
+    <name>LineaDeTiempo</name>
     <version>1.0.0</version>
-    <description>Componente Línea de Tiempo</description>
-    <type>component>
-
+    <creationDate>2024-03</creationDate>
+    <author>Joel Salazar</author>
+    <authorEmail>salazarjoelo@gmail.com</authorEmail>
+    <description>Componente de línea de tiempo interactiva</description>
+    
+    <scriptfile>script.php</scriptfile>
+    
+    <administration>
+        <menu>Línea de Tiempo</menu>
+        <files folder="administrator">
+            <folder>controllers</folder>
+            <folder>models</folder>
+            <folder>views</folder>
+        </files>
+    </administration>
+    
     <files folder="site">
         <folder>controllers</folder>
         <folder>models</folder>
         <folder>views</folder>
-        <file>index.html</file>
     </files>
-
-    <administration>
-        <menu>COM_LINEADETIEMPO</menu>
-        <files folder="administrator">
-            <file>controller.php</file>
-            <folder>controllers</folder>
-            <folder>models</folder>
-            <folder>tables</folder>
-            <folder>views</folder>
-            <folder>forms</folder>
-            <folder>language</folder>
-            <folder>helpers</folder>
-            <folder>tmpl</folder>
-            <file>index.html</file>
-        </files>
-    </administration>
-
-    <languages>
-        <language tag="es-ES">administrator/language/es-ES/es-ES.com_lineadetiempo.ini</language>
-        <language tag="es-ES">administrator/language/es-ES/es-ES.com_lineadetiempo.sys.ini</language>
-        <language tag="en-GB">administrator/language/en-GB/en-GB.com_lineadetiempo.ini</language>
-        <language tag="en-GB">administrator/language/en-GB/en-GB.com_lineadetiempo.sys.ini</language>
-    </languages>
-
-    <media destination="com_lineadetiempo" folder="media/com_lineadetiempo">
+    
+    <media destination="com_lineadetiempo" folder="media">
         <folder>css</folder>
-        <file>joomla.asset.json</file>
+        <folder>js</folder>
     </media>
+    
+    <install>
+        <sql>
+            <file driver="mysql" charset="utf8">administrator/sql/install.mysql.utf8.sql</file>
+        </sql>
+    </install>
+    
+    <languages folder="administrator/language">
+        <language tag="en-GB">en-GB/en-GB.com_lineadetiempo.ini</language>
+        <language tag="es-ES">es-ES/es-ES.com_lineadetiempo.ini</language>
+    </languages>
 </extension>

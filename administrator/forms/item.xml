@@ -1,0 +1,15 @@
+<form>
+    <fieldset name="basic">
+        <field name="title" type="text" label="Título" required="true" />
+        <field name="description" type="editor" label="Descripción" />
+        <field name="start_date" type="calendar" label="Fecha de Inicio" required="true" />
+        <field name="end_date" type="calendar" label="Fecha de Fin" />
+        <field name="media_url" type="url" label="URL de Medios" />
+        <field name="media_type" type="list" label="Tipo de Medio">
+            <option value="image">Imagen</option>
+            <option value="video">Video</option>
+            <option value="embed">Embed</option>
+        </field>
+        <field name="embed_code" type="textarea" label="Código Embed" />
+    </fieldset>
+</form>

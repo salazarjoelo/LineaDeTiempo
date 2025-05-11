@@ -1,9 +1,0 @@
-<fieldset name="params">
-    <field name="mostrar_fechas" 
-           type="list" 
-           default="1"
-           label="COM_LINEADETIEMPO_SHOW_DATES">
-        <option value="1">JYES</option>
-        <option value="0">JNO</option>
-    </field>
-</fieldset>
