@@ -1,7 +1,7 @@
 <?php
 /**
- * @package     Salazarjoelo\Component\Timeline
- * @subpackage  com_timeline
+ * @package     Salazarjoelo\Component\LineaDeTiempo
+ * @subpackage  com_lineadetiempo
  *
  * @copyright   Copyright (C) 2023-2025 Joel Salazar. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
@@ -9,22 +9,21 @@
 
 declare(strict_types=1);
 
-namespace Salazarjoelo\Component\Timeline\Administrator\View\Items;
+namespace Salazarjoelo\Component\LineaDeTiempo\Administrator\View\Items;
 
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\Helper\ContentHelper; // Para permisos
-use Joomla\CMS\Helper\ComponentHelper;
+use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView; // Usar HtmlView como base es lo más común y flexible
 use Joomla\CMS\Toolbar\ToolbarHelper;
-use Joomla\CMS\Layout\LayoutHelper; // Para renderizar filtros y paginación
-use Joomla\CMS\Pagination\Pagination; // Para tipado de $this->pagination
+use Joomla\CMS\Layout\LayoutHelper;
+use Joomla\CMS\Pagination\Pagination;
 
 /**
- * Items View for Timeline component (Administrator) - List of items.
+ * Items View for LineaDeTiempo component (Administrator) - List of items.
  *
  * @since  1.0.0
  */
@@ -32,9 +31,10 @@ class HtmlView extends BaseHtmlView
 {
     protected ?array $items = null;
     protected ?Pagination $pagination = null;
-    protected ?object $state = null; // Estado del modelo (filtros, ordenación, etc.)
-    protected ?object $filterForm = null; // Objeto JForm para los filtros
-    protected ?array $activeFilters = null; // Array de filtros activos
+    protected ?object $state = null;
+    protected ?object $filterForm = null;
+    protected ?array $activeFilters = null;
+    // protected bool $sidebarExists = false; // Para controlar si se muestra el contenedor de la sidebar
 
     /**
      * Display the view.
@@ -49,22 +49,28 @@ class HtmlView extends BaseHtmlView
         $this->items         = $this->get('Items');
         $this->pagination    = $this->get('Pagination');
         $this->state         = $this->get('State');
-        $this->filterForm    = $this->get('FilterForm');    // Desde ListModel
-        $this->activeFilters = $this->get('ActiveFilters'); // Desde ListModel
+        $this->filterForm    = $this->get('FilterForm');
+        $this->activeFilters = $this->get('ActiveFilters');
+        // $this->sidebarExists = !empty($this->filterForm) || !empty($this->get('Sidebar')); // Comprueba si hay algo que mostrar en la sidebar
 
-        // Verificar errores (ListModel los acumula)
         if (count($errors = $this->get('Errors'))) {
             Factory::getApplication()->enqueueMessage(implode("\n", $errors), 'error');
-            // Podrías lanzar una excepción aquí si prefieres un manejo de error más drástico
-            // throw new \RuntimeException(implode("\n", $errors), 500);
             return;
         }
 
         $this->addToolbar();
-        $this->addSidebar(); // Para mostrar los filtros en la barra lateral
+        
+        // Preparar y asignar la sidebar para que la plantilla la renderice
+        // La plantilla puede decidir si usa $this->sidebar o HTMLHelper::_('sidebar.render')
+        if (!empty($this->filterForm) || method_exists($this, 'getSidebar')) { // Revisar si hay filtros o un método getSidebar
+            $this->sidebar = $this->getSidebar(); // El método getSidebar está en JViewLegacy, aquí lo emulamos o usamos directamente HTMLHelper en tmpl
+            if (empty($this->sidebar) && $this->filterForm) { // Si getSidebar no devolvió nada pero hay filtros
+                 ob_start();
+                 HTMLHelper::_('sidebar.render', ['view' => $this]);
+                 $this->sidebar = ob_get_clean();
+            }
+        }
 
-        // Asignar el autor del componente para la plantilla (ej. pie de página)
-        // $this->componentAuthor = ComponentHelper::getParams('com_timeline')->get('author', 'Joel Salazar');
 
         parent::display($tpl);
     }
@@ -79,48 +85,49 @@ class HtmlView extends BaseHtmlView
     {
         $app   = Factory::getApplication();
         $user  = $app->getIdentity();
-        $canDo = ContentHelper::getActions('com_timeline'); // Permisos a nivel de componente
+        $canDo = ContentHelper::getActions('com_lineadetiempo'); // Asset principal del componente
 
-        ToolbarHelper::title(Text::_('COM_TIMELINE_MANAGER_ITEMS_TITLE'), 'list-ul icon-list-ul'); // Título y icono
+        ToolbarHelper::title(Text::_('COM_LINEADETIEMPO_MANAGER_ITEMS_TITLE'), 'list-ul icon-list-ul');
 
         if ($canDo->get('core.create')) {
-            ToolbarHelper::addNew('item.add', 'JTOOLBAR_NEW'); // Tarea del ItemController
+            ToolbarHelper::addNew('item.add', 'JTOOLBAR_NEW');
         }
 
         if ($canDo->get('core.edit')) {
-            ToolbarHelper::editList('item.edit', 'JTOOLBAR_EDIT'); // Tarea del ItemController
+            ToolbarHelper::editList('item.edit', 'JTOOLBAR_EDIT');
         }
         
         if ($canDo->get('core.edit.state')) {
-            ToolbarHelper::publish('items.publish', 'JTOOLBAR_PUBLISH', true);     // Tarea del ItemsController
-            ToolbarHelper::unpublish('items.unpublish', 'JTOOLBAR_UNPUBLISH', true); // Tarea del ItemsController
-            // Considera añadir 'archive' y 'trash' si los usas en tu campo 'state'
+            ToolbarHelper::publish('items.publish', 'JTOOLBAR_PUBLISH', true);
+            ToolbarHelper::unpublish('items.unpublish', 'JTOOLBAR_UNPUBLISH', true);
+            // Si tu tabla y modelo soportan archivado y papelera:
             // ToolbarHelper::archiveList('items.archive', 'JTOOLBAR_ARCHIVE');
             // ToolbarHelper::trash('items.trash', 'JTOOLBAR_TRASH');
         }
 
         if ($canDo->get('core.delete')) {
-            ToolbarHelper::deleteList(Text::_('COM_TIMELINE_CONFIRM_DELETE_ITEMS_MSG'), 'items.delete', 'JTOOLBAR_DELETE'); // Tarea del ItemsController
+            ToolbarHelper::deleteList(Text::_('COM_LINEADETIEMPO_CONFIRM_DELETE_ITEMS_MSG'), 'items.delete', 'JTOOLBAR_DELETE');
         }
 
-        // Botón de Opciones del componente
-        if ($user->authorise('core.admin', 'com_timeline') || $user->authorise('core.options', 'com_timeline')) {
-            ToolbarHelper::preferences('com_timeline');
+        if ($user->authorise('core.admin', 'com_lineadetiempo') || $user->authorise('core.options', 'com_lineadetiempo')) {
+            ToolbarHelper::preferences('com_lineadetiempo');
         }
     }
     
     /**
-     * Adds the sidebar with search tools.
+     * Renders the sidebar. (Opcional, la plantilla puede usar HTMLHelper::_('sidebar.render') directamente)
+     * Pero si necesitas más control, puedes generar el HTML de la sidebar aquí.
      *
-     * @return  void
+     * @return  string  The HTML for the sidebar or empty string.
      * @since   1.0.0
      */
-    protected function addSidebar(): void
+    /*
+    protected function getSidebar(): string
     {
-        // Esto renderiza la barra lateral estándar de Joomla con los filtros.
-        // Requiere que $this->filterForm y $this->activeFilters estén disponibles (cargados desde el ItemsModel).
-        if ($this->filterForm !== null) {
-             HTMLHelper::_('sidebar.render', ['view' => $this]);
+        if ($this->filterForm) {
+            return LayoutHelper::render('joomla.searchtools.sidebar', ['view' => $this]);
         }
+        return '';
     }
+    */
 }
