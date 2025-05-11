@@ -1,0 +1,41 @@
+<fieldset name="media">
+    <field
+        name="media_type"
+        type="list"
+        label="COM_LINEADETIEMPO_MEDIA_TYPE"
+        default="image"
+    >
+        <option value="image">JIMAGE</option>
+        <option value="video">JMEDIA</option>
+        <option value="embed">COM_LINEADETIEMPO_EMBED_CODE</option>
+    </field>
+
+    <field
+        name="media_file"
+        type="media"
+        label="COM_LINEADETIEMPO_MEDIA_FILE"
+        directory="com_lineadetiempo/media"
+        hide_none="true"
+        hide_default="true"
+        preview="tooltip"
+        depends="media_type:image"
+    />
+
+    <field
+        name="video_url"
+        type="url"
+        label="COM_LINEADETIEMPO_VIDEO_URL"
+        description="COM_LINEADETIEMPO_VIDEO_URL_DESC"
+        filter="url"
+        depends="media_type:video"
+    />
+
+    <field
+        name="embed_code"
+        type="textarea"
+        label="COM_LINEADETIEMPO_EMBED_CODE"
+        rows="5"
+        filter="raw"
+        depends="media_type:embed"
+    />
+</fieldset>

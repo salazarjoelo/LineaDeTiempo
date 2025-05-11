@@ -1,42 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="5.0" method="upgrade">
-    <name>Línea de Tiempo / Timeline</name>
-    <version>1.0.0</version>
-    <creationDate>2024</creationDate>
+    <name>Línea de Tiempo</name>
+    <namespace path="src">JoelSalazar\Component\LineaDeTiempo</namespace>
+    <version>2.0.0</version>
+    <creationDate>2024-03</creationDate>
     <author>Joel Salazar</author>
     <authorEmail>salazarjoelo@gmail.com</authorEmail>
-    <description>COM_LINEADETIEMPO_DESCRIPTION</description>
-    <namespace path="src">JoelSalazar\LineaDeTiempo</namespace>
+    <description>COM_LINEADETIEMPO_XML_DESCRIPTION</description>
+    <scriptfile>script.php</scriptfile>
     
-    <!-- Idiomas -->
     <languages folder="administrator/language">
-        <language tag="en-GB">en-GB/en-GB.com_lineadetiempo.sys.ini</language>
-        <language tag="es-ES">es-ES/es-ES.com_lineadetiempo.sys.ini</language>
+        <language tag="en-GB">en-GB/en-GB.com_lineadetiempo.ini</language>
+        <language tag="es-ES">es-ES/es-ES.com_lineadetiempo.ini</language>
     </languages>
-    
-    <!-- Backend -->
+
     <administration>
-        <menu>COM_LINEADETIEMPO_MENU</menu>
+        <menu img="icon-time" link="index.php?option=com_lineadetiempo">COM_LINEADETIEMPO</menu>
+        <submenu>
+            <menu link="index.php?option=com_lineadetiempo&amp;view=eventos">COM_LINEADETIEMPO_EVENTOS</menu>
+        </submenu>
         <files folder="administrator">
-            <folder>language</folder>
             <folder>controllers</folder>
             <folder>models</folder>
             <folder>views</folder>
+            <folder>services</folder>
         </files>
     </administration>
-    
-    <!-- Frontend -->
+
     <files folder="site">
-        <folder>language</folder>
         <folder>controllers</folder>
         <folder>models</folder>
         <folder>views</folder>
+        <folder>language</folder>
     </files>
-    
-    <!-- SQL -->
-    <install>
-        <sql>
-            <file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
-        </sql>
-    </install>
+
+    <media destination="com_lineadetiempo" folder="media">
+        <folder>css</folder>
+        <folder>js</folder>
+    </media>
+
+    <sql>
+        <file driver="mysql" charset="utf8">administrator/sql/install.mysql.utf8.sql</file>
+    </sql>
 </extension>
