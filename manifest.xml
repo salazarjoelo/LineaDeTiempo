@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" version="5.0" method="upgrade">
+    <name>Línea de Tiempo / Timeline</name>
+    <version>1.0.0</version>
+    <creationDate>2024</creationDate>
+    <author>Joel Salazar</author>
+    <authorEmail>salazarjoelo@gmail.com</authorEmail>
+    <description>COM_LINEADETIEMPO_DESCRIPTION</description>
+    <namespace path="src">JoelSalazar\LineaDeTiempo</namespace>
+    
+    <!-- Idiomas -->
+    <languages folder="administrator/language">
+        <language tag="en-GB">en-GB/en-GB.com_lineadetiempo.sys.ini</language>
+        <language tag="es-ES">es-ES/es-ES.com_lineadetiempo.sys.ini</language>
+    </languages>
+    
+    <!-- Backend -->
+    <administration>
+        <menu>COM_LINEADETIEMPO_MENU</menu>
+        <files folder="administrator">
+            <folder>language</folder>
+            <folder>controllers</folder>
+            <folder>models</folder>
+            <folder>views</folder>
+        </files>
+    </administration>
+    
+    <!-- Frontend -->
+    <files folder="site">
+        <folder>language</folder>
+        <folder>controllers</folder>
+        <folder>models</folder>
+        <folder>views</folder>
+    </files>
+    
+    <!-- SQL -->
+    <install>
+        <sql>
+            <file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
+        </sql>
+    </install>
+</extension>

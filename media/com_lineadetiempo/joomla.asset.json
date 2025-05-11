@@ -1,0 +1,18 @@
+{
+    "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+    "name": "com_lineadetiempo",
+    "version": "1.0.0",
+    "assets": [
+        {
+            "name": "com_lineadetiempo.frontend",
+            "type": "script",
+            "uri": "com_lineadetiempo/frontend.min.js",
+            "dependencies": ["core"]
+        },
+        {
+            "name": "com_lineadetiempo.frontend-styles",
+            "type": "style",
+            "uri": "com_lineadetiempo/frontend.min.css"
+        }
+    ]
+}

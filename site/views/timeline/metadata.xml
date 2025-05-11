@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+    <layout title="COM_LINEADETIEMPO_TIMELINE_VIEW">
+        <message>COM_LINEADETIEMPO_TIMELINE_VIEW_DESC</message>
+    </layout>
+    <fields name="params">
+        <fieldset name="basic">
+            <field
+                name="show_social_icons"
+                type="list"
+                default="1"
+                label="COM_LINEADETIEMPO_PARAM_SHOW_SOCIAL_ICONS"
+            >
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
+        </fieldset>
+    </fields>
+</metadata>

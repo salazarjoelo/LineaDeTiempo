@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+    <fieldset name="details">
+        <field
+            name="titulo"
+            type="text"
+            label="COM_LINEADETIEMPO_TITULO"
+            required="true"
+            size="40"
+            filter="safehtml"
+        />
+        
+        <field
+            name="descripcion"
+            type="textarea"
+            label="COM_LINEADETIEMPO_DESCRIPCION"
+            rows="5"
+            filter="safehtml"
+        />
+        
+        <field
+            name="red_social"
+            type="list"
+            label="COM_LINEADETIEMPO_RED_SOCIAL"
+            default="twitter"
+            query="helper:getSocialMediaOptions"
+        />
+    </fieldset>
+</form>
